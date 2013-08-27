@@ -15,7 +15,8 @@
 				Value="{Binding KinectSensorManager.KinectSensor.ElevationAngle, Mode=TwoWay, ElementName=thisWindow}"/>
 		<TextBox Height="23" Margin="0,210,12,0" Name="textBox1" VerticalAlignment="Top" HorizontalAlignment="Right" Width="38" IsReadOnlyCaretVisible="False"
 				 Text="{Binding KinectSensorManager.KinectSensor.ElevationAngle, Mode=TwoWay, ElementName=thisWindow}"/>
-		
-		<Image Height="240" HorizontalAlignment="Left" Margin="336,12,0,0" x:Name="depthImage" Stretch="Fill" VerticalAlignment="Top" Width="320"/>
+
+		<my:KinectDepthViewer Height="240" HorizontalAlignment="Left" Margin="336,12,0,0" x:Name="depthImage" Stretch="Fill" VerticalAlignment="Top" Width="320"
+							  KinectSensorManager="{Binding KinectSensorManager, ElementName=thisWindow}" />
 	</Grid>
 </Window>
