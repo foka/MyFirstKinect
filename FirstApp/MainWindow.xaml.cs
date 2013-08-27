@@ -3,6 +3,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.Kinect;
 using Microsoft.Kinect.Toolkit;
+using Microsoft.Samples.Kinect.WpfViewers;
 
 namespace FirstApp
 {
@@ -13,10 +14,12 @@ namespace FirstApp
 	{
 		public MainWindow()
 		{
+			KinectSensorManager = new KinectSensorManager();
 			InitializeComponent();
 		}
 
 		private KinectSensorChooser kinectSensorChooser;
+		public KinectSensorManager KinectSensorManager { get; private set; }
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
@@ -43,24 +46,12 @@ namespace FirstApp
 
 			sensor.Start();
 			// ? sensor.AudioSource.Start()
+
+			KinectSensorManager.KinectSensor = sensor;
 		}
 
 		void sensor_AllFramesReady(object sender, AllFramesReadyEventArgs e)
 		{
-			using (ColorImageFrame colorFrame = e.OpenColorImageFrame())
-			{
-				if (colorFrame == null)
-				{
-					return;
-				}
-
-				byte[] pixels = new byte[colorFrame.PixelDataLength];
-				colorFrame.CopyPixelDataTo(pixels);
-
-				int stride = colorFrame.Width * 4;
-				image1.Source = BitmapSource.Create(colorFrame.Width, colorFrame.Height,
-					96, 96, PixelFormats.Bgr32, null, pixels, stride);
-			}
 		}
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
