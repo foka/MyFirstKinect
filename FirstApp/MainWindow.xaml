@@ -1,22 +1,18 @@
 ﻿<Window x:Class="FirstApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="321" Width="768" Loaded="Window_Loaded" Closing="Window_Closing" xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers"
+        Title="MainWindow" Height="604" Width="736" Loaded="Window_Loaded" Closing="Window_Closing" xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers"
         xmlns:k="http://schemas.microsoft.com/kinect/2013"
 		x:Name="thisWindow">
     <Grid>
 		<k:KinectSensorChooserUI x:Name="kinectSensorChooserUI" />
-		<my:KinectColorViewer HorizontalAlignment="Left" Margin="10,10,0,0" Name="kinectColorViewer1" VerticalAlignment="Top" Height="240" Width="320"
+		<my:KinectColorViewer HorizontalAlignment="Left" Margin="10,10,0,0" Name="kinectColorViewer1" VerticalAlignment="Top" Height="480" Width="640"
 							  KinectSensorManager="{Binding KinectSensorManager, ElementName=thisWindow}">
 		</my:KinectColorViewer>
-		
-		<Slider Height="192" Margin="0,12,12,0" Name="slider1" VerticalAlignment="Top" Orientation="Vertical" Minimum="-27" Maximum="27"
-				HorizontalAlignment="Right" Width="29" 
-				Value="{Binding KinectSensorManager.KinectSensor.ElevationAngle, Mode=TwoWay, ElementName=thisWindow}"/>
-		<TextBox Height="23" Margin="0,210,12,0" Name="textBox1" VerticalAlignment="Top" HorizontalAlignment="Right" Width="38" IsReadOnlyCaretVisible="False"
+		<TextBox Height="23" Margin="0,12,12,0" Name="textBox1" VerticalAlignment="Top" HorizontalAlignment="Right" Width="38" IsReadOnlyCaretVisible="False"
 				 Text="{Binding KinectSensorManager.KinectSensor.ElevationAngle, Mode=TwoWay, ElementName=thisWindow}"/>
-
-		<my:KinectDepthViewer Height="240" HorizontalAlignment="Left" Margin="336,12,0,0" x:Name="depthImage" Stretch="Fill" VerticalAlignment="Top" Width="320"
-							  KinectSensorManager="{Binding KinectSensorManager, ElementName=thisWindow}" />
+		<Ellipse Height="40" HorizontalAlignment="Left" Margin="379,60,0,0" Name="headEllipse" Stroke="Black" VerticalAlignment="Top" Width="40" Fill="Red" />
+		<Ellipse Fill="Lime" Height="20" HorizontalAlignment="Left" Margin="379,94,0,0" Name="leftEllipse" Stroke="Black" VerticalAlignment="Top" Width="20" />
+		<Ellipse Fill="#FFB100FF" Height="20" HorizontalAlignment="Left" Margin="379,114,0,0" Name="rightEllipse" Stroke="Black" VerticalAlignment="Top" Width="20" />
 	</Grid>
 </Window>
