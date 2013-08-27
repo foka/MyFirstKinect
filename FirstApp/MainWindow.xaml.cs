@@ -1,6 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using Microsoft.Kinect;
 using Microsoft.Kinect.Toolkit;
 using Microsoft.Samples.Kinect.WpfViewers;
@@ -14,19 +12,20 @@ namespace FirstApp
 	{
 		public MainWindow()
 		{
+			KinectSensorChooser = new KinectSensorChooser();
 			KinectSensorManager = new KinectSensorManager();
+
 			InitializeComponent();
 		}
 
-		private KinectSensorChooser kinectSensorChooser;
+		public KinectSensorChooser KinectSensorChooser { get; private set; }
 		public KinectSensorManager KinectSensorManager { get; private set; }
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			kinectSensorChooser = new KinectSensorChooser();
-			kinectSensorChooser.KinectChanged += KinectChanged;
-			kinectSensorChooser.Start();
-			kinectSensorChooserUI.KinectSensorChooser = kinectSensorChooser;
+			KinectSensorChooser.KinectChanged += KinectChanged;
+			KinectSensorChooser.Start();
+			kinectSensorChooserUI.KinectSensorChooser = KinectSensorChooser;
 		}
 
 		private void KinectChanged(object sender, KinectChangedEventArgs e)
@@ -56,7 +55,7 @@ namespace FirstApp
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			StopKinect(kinectSensorChooser.Kinect);
+			StopKinect(KinectSensorChooser.Kinect);
 		}
 
 		private void StopKinect(KinectSensor sensor)
