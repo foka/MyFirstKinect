@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Shapes;
+﻿using System.Windows;
 using Microsoft.Kinect;
 using Microsoft.Kinect.Toolkit;
 using Microsoft.Samples.Kinect.WpfViewers;
@@ -24,8 +20,6 @@ namespace FirstApp
 
 		public KinectSensorChooser KinectSensorChooser { get; private set; }
 		public KinectSensorManager KinectSensorManager { get; private set; }
-		const int skeletonCount = 6;
-		Skeleton[] allSkeletons = new Skeleton[skeletonCount];
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
@@ -45,10 +39,11 @@ namespace FirstApp
 		private void StartKinect(KinectSensor sensor)
 		{
 			sensor.AllFramesReady += sensor_AllFramesReady;
-			sensor.SkeletonFrameReady += sensor_SkeletonFrameReady;
 
 			sensor.Start();
 			// ? sensor.AudioSource.Start()
+
+			KinectSensorManager.ElevationAngle = sensor.ElevationAngle;
 
 			KinectSensorManager.KinectSensor = sensor;
 			KinectSensorManager.SkeletonStreamEnabled = true;
@@ -56,65 +51,15 @@ namespace FirstApp
 			KinectSensorManager.SkeletonEnableTrackingInNearMode = true;
 			KinectSensorManager.DepthStreamEnabled = true;
 			KinectSensorManager.ColorStreamEnabled = true;
-
-			sensor.ElevationAngle = -20;
 		}
 
-		void sensor_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
-		{
-		}
 		 
 		void sensor_AllFramesReady(object sender, AllFramesReadyEventArgs e)
 		{
-			var skeleton = GetFirstSkeleton(e);
-			if (skeleton != null)
-				SetCameraPoints(skeleton, e);
+
 		}
 
-		void SetCameraPoints(Skeleton skeleton, AllFramesReadyEventArgs e)
-		{
-			using (DepthImageFrame depth = e.OpenDepthImageFrame())
-			{
-				if (depth == null || KinectSensorChooser.Kinect == null)
-				{
-					return;
-				}
 
-				var headColorPoint = KinectSensorChooser.Kinect.CoordinateMapper.MapSkeletonPointToColorPoint(
-					skeleton.Joints[JointType.Head].Position, KinectSensorChooser.Kinect.ColorStream.Format);
-				var leftColorPoint = KinectSensorChooser.Kinect.CoordinateMapper.MapSkeletonPointToColorPoint(
-					skeleton.Joints[JointType.HandLeft].Position, KinectSensorChooser.Kinect.ColorStream.Format);
-				var rightColorPoint = KinectSensorChooser.Kinect.CoordinateMapper.MapSkeletonPointToColorPoint(
-					skeleton.Joints[JointType.HandRight].Position, KinectSensorChooser.Kinect.ColorStream.Format);
-
-				CameraPosition(headEllipse, headColorPoint);
-				CameraPosition(leftEllipse, leftColorPoint);
-				CameraPosition(rightEllipse, rightColorPoint);
-			}
-		}
-
-		private void CameraPosition(FrameworkElement element, ColorImagePoint point)
-		{
-			element.Margin = new Thickness(
-				point.X - (element.Width / 2) + kinectColorViewer1.Margin.Left,
-				point.Y - (element.Height / 2) + kinectColorViewer1.Margin.Top,
-				0,
-				0);
-		}
-
-		Skeleton GetFirstSkeleton(AllFramesReadyEventArgs e)
-		{
-			using (SkeletonFrame skeletonFrame = e.OpenSkeletonFrame())
-			{
-				if (skeletonFrame == null)
-					return null;
-
-				skeletonFrame.CopySkeletonDataTo(allSkeletons);
-				Skeleton first = allSkeletons.Where(s => s.TrackingState == SkeletonTrackingState.Tracked)
-					.FirstOrDefault();
-				return first;
-			}
-		}
 
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -127,6 +72,11 @@ namespace FirstApp
 			sensor.Stop();
 			if (sensor.AudioSource != null)
 				sensor.AudioSource.Stop();
+		}
+
+		private void Button1_OnClick(object sender, RoutedEventArgs e)
+		{
+			KinectSensorManager.KinectSensor.ElevationAngle = int.Parse(textBox1.Text);
 		}
 	}
 }

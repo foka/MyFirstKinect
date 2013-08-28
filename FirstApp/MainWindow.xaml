@@ -6,13 +6,16 @@
 		x:Name="thisWindow">
     <Grid>
 		<k:KinectSensorChooserUI x:Name="kinectSensorChooserUI" />
-		<my:KinectColorViewer HorizontalAlignment="Left" Margin="10,10,0,0" Name="kinectColorViewer1" VerticalAlignment="Top" Height="480" Width="640"
+		<TextBox Height="23" Margin="0,12,12,0" Name="textBox1" VerticalAlignment="Top" HorizontalAlignment="Right" Width="38" IsReadOnlyCaretVisible="False"
+				 Text="{Binding KinectSensorManager.KinectSensor.ElevationAngle, Mode=OneWay, ElementName=thisWindow}"/>
+
+		<my:KinectColorViewer HorizontalAlignment="Left" Margin="10,10,0,0" Name="kinectColorViewer1" VerticalAlignment="Top" Height="240" Width="320"
 							  KinectSensorManager="{Binding KinectSensorManager, ElementName=thisWindow}">
 		</my:KinectColorViewer>
-		<TextBox Height="23" Margin="0,12,12,0" Name="textBox1" VerticalAlignment="Top" HorizontalAlignment="Right" Width="38" IsReadOnlyCaretVisible="False"
-				 Text="{Binding KinectSensorManager.KinectSensor.ElevationAngle, Mode=TwoWay, ElementName=thisWindow}"/>
-		<Ellipse Height="40" HorizontalAlignment="Left" Margin="379,60,0,0" Name="headEllipse" Stroke="Black" VerticalAlignment="Top" Width="40" Fill="Red" />
-		<Ellipse Fill="Lime" Height="20" HorizontalAlignment="Left" Margin="379,94,0,0" Name="leftEllipse" Stroke="Black" VerticalAlignment="Top" Width="20" />
-		<Ellipse Fill="#FFB100FF" Height="20" HorizontalAlignment="Left" Margin="379,114,0,0" Name="rightEllipse" Stroke="Black" VerticalAlignment="Top" Width="20" />
+		<my:KinectSkeletonViewer HorizontalAlignment="Left" Margin="12,12,0,0" Name="kinectSkeletonViewer1" VerticalAlignment="Top" Height="240" Width="320"
+								 KinectSensorManager="{Binding KinectSensorManager, ElementName=thisWindow}"
+								 />
+		<Button Content="Set" Height="23" HorizontalAlignment="Right" Margin="0,41,12,0" Name="button1" VerticalAlignment="Top" Width="38"
+				Click="Button1_OnClick"/>
 	</Grid>
 </Window>
