@@ -47,6 +47,14 @@ namespace FirstApp
 
 			KinectSensorManager.KinectSensor = sensor;
 			KinectSensorManager.SkeletonStreamEnabled = true;
+			KinectSensorManager.TransformSmoothParameters = new TransformSmoothParameters
+			{
+				Smoothing = 0.99f,
+				Correction = 0.1f,
+				Prediction = 0.1f,
+				JitterRadius = 0.05f,
+				MaxDeviationRadius = 0.05f,
+			};
 			KinectSensorManager.SkeletonTrackingMode = SkeletonTrackingMode.Seated;
 			KinectSensorManager.SkeletonEnableTrackingInNearMode = true;
 			KinectSensorManager.DepthStreamEnabled = true;
